@@ -60,7 +60,7 @@ export const KYCStatus = () => {
                         .format("DD MMM YYYY hh:mm A")}
                     </div>
                     <div className={styles.remark}>{item.remarks}</div>
-                    {index == 0 && (
+                    {index === 0 && (
                       <a
                         target="_blank"
                         rel="noreferrer"

@@ -1,0 +1,23 @@
+.tile {
+  background-color: #2e5077;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tile .title {
+  font-weight: 500;
+}
+.tile .value {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-top: -8px;
+}
+.tile .icon svg {
+  font-size: 3rem;
+  opacity: 0.8;
+}

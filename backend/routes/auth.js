@@ -56,6 +56,7 @@ router.post(
   ],
   authController.postLogin
 );
+router.post("/logout", authController.postLogout);
 
 router.get("/state", authController.getAuthState);
 

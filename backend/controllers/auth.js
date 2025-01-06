@@ -104,8 +104,16 @@ exports.getAuthState = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.error("Auth State Error:", error.message);
     error.message = "Something went wrong while checking auth state";
     next(error);
   }
+};
+
+exports.postLogout = (req, res, next) => {
+  res.clearCookie("authToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+  res.status(200).json({ message: "Logged out successfully" });
 };

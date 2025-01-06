@@ -1,5 +1,6 @@
 const imagekit = require("../utils/imageKit");
 const KYCRequest = require("../models/kycRequest");
+const User = require("../models/user");
 
 exports.postUpdateKYC = async (req, res, next) => {
   try {
@@ -63,6 +64,33 @@ exports.getKYCStatus = async (req, res, next) => {
     res.status(200).json(status);
   } catch (error) {
     error.message = "Error fetching KYC status";
+    next(error);
+  }
+};
+
+exports.patchUpdateStatus = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const kycDoc = await KYCRequest.findOne({ _id: req.params.kycId });
+
+    kycDoc.status = data.status;
+    kycDoc.timeline.push({
+      status: data.status,
+      remarks: data.remarks,
+      time: Date.now(),
+    });
+
+    await kycDoc.save();
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: kycDoc.user },
+      { $set: { KYCStatus: data.status } },
+      { new: true }
+    );
+
+    res.send({ message: "KYC Status updated successfully" });
+  } catch (error) {
+    error.message = "Something went wrong while updating the KYC status";
     next(error);
   }
 };

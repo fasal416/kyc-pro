@@ -3,7 +3,7 @@ const multer = require("multer");
 const express = require("express");
 const throwValidatorError = require("../middleware/throwValidatorError");
 const kycController = require("../controllers/kyc");
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 const authorize = require("../middleware/authorize");
 
 const router = express.Router();
@@ -25,6 +25,31 @@ router.post(
   ],
 
   kycController.postUpdateKYC
+);
+
+router.patch(
+  "/:kycId",
+  [
+    param("kycId")
+      .notEmpty()
+      .withMessage("User ID is required.")
+      .isMongoId()
+      .withMessage("Invalid User ID."),
+    body("status")
+      .notEmpty()
+      .withMessage("Status is required.")
+      .isIn(["approved", "rejected"])
+      .withMessage('Status must be either "approved" or "rejected".')
+      .escape(),
+    body("remarks")
+      .optional()
+      .isString()
+      .withMessage("Remarks must be a string.")
+      .isLength({ max: 500 })
+      .withMessage("Remarks must not exceed 500 characters.")
+      .escape(),
+  ],
+  kycController.patchUpdateStatus
 );
 
 router.get("/status", authorize(["user", "admin"]), kycController.getKYCStatus);

@@ -1,0 +1,13 @@
+{
+  "name": "kycpro",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "start:frontend": "cd frontend && npm start",
+    "start:server": "cd backend && npm start"
+  },
+  "author": "Fasalu Rahman",
+  "license": "ISC"
+}

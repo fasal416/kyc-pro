@@ -1,29 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../store/auth/authThunks";
+import { checkAuthState } from "../../store/auth/authThunks";
 
 const ProtectedRoute = ({ children }) => {
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.auth);
+
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  const { user, loading, error, isLoggedIn } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token && !user) {
-      dispatch(login({ token, type: "token" }));
+    if (!isLoggedIn && !loading && initialLoad) {
+      dispatch(checkAuthState());
+      setInitialLoad(false);
     }
-  }, [dispatch, user]);
+  }, [dispatch, isLoggedIn, loading, initialLoad]);
 
-  if (!user && !loading) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (loading) {
+  if (loading || (!user && initialLoad)) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (!user || error) {
     localStorage.removeItem("token");
     return <Navigate to="/login" replace />;
   }

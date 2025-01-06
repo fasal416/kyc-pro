@@ -1,0 +1,86 @@
+.header {
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #2e5077;
+  text-align: start;
+}
+
+.registerBtn {
+  display: block;
+  margin-top: 30px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #2e5077;
+}
+
+.errors {
+  background-color: rgb(255, 225, 225);
+  padding: 10px;
+  font-size: small;
+  border-radius: 10px;
+  border: 1px solid red;
+  color: red;
+  margin-bottom: 0;
+}
+
+.kycStatus {
+  text-align: start;
+}
+
+.kycStatus .title {
+  font-weight: 600;
+}
+
+.timeline {
+  margin-top: 15px;
+  border-left: 1px solid #8f8f8f;
+}
+
+.timeline .timelineItem {
+  background-color: #f0f0f0;
+  border-radius: 0 10px 10px 10px;
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  margin-left: 15px;
+  position: relative;
+}
+
+.timeline .timelineItem::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 16px;
+  width: 16px;
+  border-radius: 10px;
+  background-color: #b4b4b4;
+  transform: translateX(-23px) translateY(-50%);
+}
+
+.timeline .timelineItem.completed::after {
+  background-color: #4da1a9;
+}
+.timeline .timelineItem .date {
+  font-size: 0.8rem;
+  color: #7e7e7e;
+}
+.timeline .timelineItem .remark {
+  font-weight: 600;
+  color: #3f3f3f;
+}
+.timeline .timelineItem a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4da1a9;
+}
+
+.statusMessage {
+  font-size: 0.9rem;
+  margin-top: 30px;
+  text-align: center;
+  border: 2px solid #4da1a9;
+  border-radius: 10px;
+  padding: 10px;
+  background: #e0fff7;
+  color: #2e5077;
+}

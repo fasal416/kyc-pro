@@ -45,32 +45,18 @@ router.post(
 router.post(
   "/login",
   [
-    query("type")
-      .optional()
-      .isIn(["password", "token"])
-      .escape()
-      .withMessage("Invalid login type"),
     body("email")
-      .if(query("type").equals("password"))
       .notEmpty()
       .withMessage("Email is required")
       .isEmail()
       .withMessage("Invalid email address")
       .normalizeEmail(),
-    body("password")
-      .if(query("type").equals("password"))
-      .notEmpty()
-      .withMessage("Password is required")
-      .escape(),
-    body("token")
-      .if(query("type").equals("token"))
-      .notEmpty()
-      .withMessage("Token is required")
-      .escape(),
-
+    body("password").notEmpty().withMessage("Password is required").escape(),
     throwValidatorError,
   ],
   authController.postLogin
 );
+
+router.get("/state", authController.getAuthState);
 
 module.exports = router;

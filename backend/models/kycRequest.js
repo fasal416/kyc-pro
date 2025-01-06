@@ -8,12 +8,14 @@ const KYCRequestSchema = new mongoose.Schema(
       default: "pending",
       enum: ["pending", "approved", "rejected"],
     },
-    idDocument: { url: String, fileId: String },
+    documentType: { type: String, required: true },
+    file: { url: String, fileId: String },
     timeline: [
       {
         status: String,
         remarks: String,
         updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        time: { type: Date, default: Date.now },
       },
     ],
   },

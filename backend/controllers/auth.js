@@ -36,68 +36,76 @@ exports.postRegister = async (req, res) => {
 
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  const { type } = req.query;
 
   try {
-    if (type === "token") {
-      const { token } = req.body;
-      if (!token) {
-        return res
-          .status(400)
-          .json({ message: "Token is required for token-based login" });
-      }
+    const user = await User.findOne({ email });
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      const user = await User.findById(decoded.userId);
-      if (!user) {
-        return res.status(401).json({ message: "User not found" });
-      }
-      return res.status(200).json({
-        message: "Login successful",
-        user: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          KYCStatus: user.KYCStatus,
-        },
-        token,
-      });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    if (type === "password") {
-      const user = await User.findOne({ email });
-
-      if (!user) {
-        return res.status(401).json({ message: "Invalid email or password" });
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(401).json({ message: "Invalid email or password" });
-      }
-
-      const payload = { userId: user._id };
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
-
-      return res.status(200).json({
-        message: "Login successful",
-        token,
-        user: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          KYCStatus: user.KYCStatus,
-        },
-      });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    return res.status(400).json({ message: "Invalid login type" });
+    const payload = { userId: user._id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        KYCStatus: user.KYCStatus,
+        role: user.role,
+      },
+    });
   } catch (error) {
     console.error("Login Error:", error.message);
     error.message = "Something went wrong while logging in";
+    next(error);
+  }
+};
+
+exports.getAuthState = async (req, res, next) => {
+  if (!req.cookies.authToken) {
+    return res
+      .status(200)
+      .json({ isLoggedIn: false, message: "No user logged in" });
+  }
+
+  try {
+    const payload = jwt.verify(req.cookies.authToken, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: payload.userId });
+
+    if (!user) {
+      return res.status(200).json({ message: "No user logged in" });
+    }
+    return res.status(200).json({
+      message: "User is logged in",
+      isLoggedIn: true,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        KYCStatus: user.KYCStatus,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Auth State Error:", error.message);
+    error.message = "Something went wrong while checking auth state";
     next(error);
   }
 };

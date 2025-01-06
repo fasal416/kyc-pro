@@ -14,7 +14,7 @@ import { login } from "../../../store/auth/authThunks";
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

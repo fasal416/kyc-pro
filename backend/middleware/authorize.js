@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { JWT_SECRET } = process.env;
 
 const authorize = (accessRoles) => {
   return async (req, res, next) => {
     try {
-      const token = req.header("Authorization")?.replace("Bearer ", "");
+      const token = req.cookies.authToken;
       if (!token) {
         return res
           .status(401)

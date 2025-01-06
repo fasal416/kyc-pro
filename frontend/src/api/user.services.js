@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
 
-export const getUser = (id) => {
-  return axiosInstance.get(`/user/${id}`);
+export const getAuthState = (id) => {
+  return axiosInstance.get(`/auth/state`);
 };

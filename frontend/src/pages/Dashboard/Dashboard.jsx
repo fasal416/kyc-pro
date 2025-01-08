@@ -65,7 +65,7 @@ export const Dashboard = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
 
   const handleSubmit = async () => {

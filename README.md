@@ -4,6 +4,12 @@
 
 **KYC Pro** is a full-stack web application designed to simulate a **Know Your Customer (KYC)** system. This application includes key features such as user registration, ID verification, and reporting functionalities tailored to compliance workflows. The system allows users to submit KYC information, and admins can review and update submission statuses.
 
+## Live Preview
+
+You can view the live version of this application hosted on Google Cloud App Engine.
+
+[Live Preview](https://kyc-pro-447214.el.r.appspot.com/)
+
 ---
 
 ## Features

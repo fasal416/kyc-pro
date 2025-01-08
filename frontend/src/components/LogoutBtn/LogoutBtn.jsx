@@ -9,7 +9,7 @@ export const LogoutBtn = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
 
   return (

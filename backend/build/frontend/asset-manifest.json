@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.2a78319a.css",
-    "main.js": "/static/js/main.373fd7d7.js",
-    "index.html": "/index.html",
-    "main.2a78319a.css.map": "/static/css/main.2a78319a.css.map",
-    "main.373fd7d7.js.map": "/static/js/main.373fd7d7.js.map"
+    "main.css": "https://kyc-pro-447214.el.r.appspot.com/static/css/main.2a78319a.css",
+    "main.js": "https://kyc-pro-447214.el.r.appspot.com/static/js/main.8cf6869d.js",
+    "index.html": "https://kyc-pro-447214.el.r.appspot.com/index.html",
+    "main.2a78319a.css.map": "https://kyc-pro-447214.el.r.appspot.com/static/css/main.2a78319a.css.map",
+    "main.8cf6869d.js.map": "https://kyc-pro-447214.el.r.appspot.com/static/js/main.8cf6869d.js.map"
   },
   "entrypoints": [
     "static/css/main.2a78319a.css",
-    "static/js/main.373fd7d7.js"
+    "static/js/main.8cf6869d.js"
   ]
 }

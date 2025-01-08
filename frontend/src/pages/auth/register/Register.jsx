@@ -20,7 +20,7 @@ export const Register = () => {
   const handleSubmit = (values) => {
     const { confirmPassword, ...userData } = values;
     const resultAction = dispatch(register(userData));
-    if (register.fulfilled.match(resultAction)) {
+    if (resultAction) {
       navigate("/");
     }
   };

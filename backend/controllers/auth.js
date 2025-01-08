@@ -22,10 +22,16 @@ exports.postRegister = async (req, res) => {
       expiresIn: "1h",
     });
 
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     res.status(201).json({
       message: "Registration successful",
       user: { _id: newUser._id, name: newUser.name, email: newUser.email },
-      token,
     });
   } catch (error) {
     console.error(error);

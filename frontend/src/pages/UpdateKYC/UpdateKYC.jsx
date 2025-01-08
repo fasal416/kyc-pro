@@ -8,6 +8,7 @@ import { updateKYCSchema } from "../../utils/validationSchemas";
 import { postUpdateKYC } from "../../api/kyc.services";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { LogoutBtn } from "../../components/LogoutBtn/LogoutBtn";
 
 export const UpdateKYC = () => {
   const navigate = useNavigate();
@@ -114,6 +115,8 @@ export const UpdateKYC = () => {
           disabled={formik.isSubmitting || !formik.isValid}
         />
       </form>
+
+      <LogoutBtn />
     </CardCenter>
   );
 };

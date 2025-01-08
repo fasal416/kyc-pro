@@ -1,0 +1,6 @@
+.logoutBtn {
+  all: unset;
+  margin-top: 20px;
+  color: rgb(182, 0, 0);
+  font-weight: 500;
+}

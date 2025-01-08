@@ -4,6 +4,7 @@ import styles from "./KYCStatus.module.css";
 import { useEffect, useState } from "react";
 import { getKYCStatus } from "../../api/kyc.services";
 import { Bounce, toast } from "react-toastify";
+import { LogoutBtn } from "../../components/LogoutBtn/LogoutBtn";
 import moment from "moment-timezone";
 
 export const KYCStatus = () => {
@@ -73,12 +74,15 @@ export const KYCStatus = () => {
                 </div>
               ))}
           </div>
-          <div className={styles.statusMessage}>
-            Your KYC has been completed successfully <br />
-            <strong> Your account will be activated very soon</strong>
-          </div>
+          {status && status.status === "approved" && (
+            <div className={styles.statusMessage}>
+              Your KYC has been completed successfully <br />
+              <strong> Your account will be activated very soon</strong>
+            </div>
+          )}
         </div>
       )}
+      <LogoutBtn />
     </CardCenter>
   );
 };

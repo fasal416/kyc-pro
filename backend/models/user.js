@@ -8,8 +8,8 @@ const UserSchema = new mongoose.Schema(
     role: { type: String, default: "user", required: true },
     KYCStatus: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending",
+      enum: ["unInitiated", "pending", "approved", "rejected"],
+      default: "unInitiated",
       required: true,
     },
   },

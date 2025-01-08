@@ -18,11 +18,15 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, "build", "frontend")));
-
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/kyc", require("./routes/kyc"));
+
+app.use(express.static(path.join(__dirname, "build", "frontend")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "frontend", "index.html"));
+});
 
 app.use(errorMiddleware);
 
